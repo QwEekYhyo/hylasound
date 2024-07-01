@@ -25,5 +25,7 @@ private:
 
     void saveButtonsToJson();
     void writeJsonFile(const QJsonArray& jsonArray);
+    void loadButtonsFromJson();
+    QJsonArray readJsonFile();
 
 };
