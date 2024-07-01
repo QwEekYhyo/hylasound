@@ -2,6 +2,7 @@
 
 #include <QPushButton>
 #include <QMediaPlayer>
+#include <QMenu>
 
 class SoundButton : public QPushButton {
     Q_OBJECT
@@ -18,9 +19,22 @@ public:
 
     SoundButton& operator=(const SoundButton& other);
 
+signals:
+    void removeRequested(SoundButton* button);
+
+protected:
+    void contextMenuEvent(QContextMenuEvent* event) override;
+
+private slots:
+    void renameButton();
+
 private:
     QMediaPlayer* m_player = nullptr;
     QString m_path;
+    QMenu* m_contextMenu;
+
+    void createContextMenu();
+
 };
 
 void SoundButton::setPlayer(QMediaPlayer* player) {

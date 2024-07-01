@@ -14,6 +14,9 @@ public:
 
     void addButton(const QString& name, const QString& filepath);
 
+private slots:
+    void removeButton(SoundButton* button);
+
 private:
     QList<SoundButton*> m_buttons;
     QGridLayout* m_layout;

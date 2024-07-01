@@ -1,5 +1,9 @@
 #include <soundbutton.hpp>
 
+#include <QInputDialog>
+#include <QLineEdit>
+#include <QContextMenuEvent>
+
 SoundButton::SoundButton(QWidget* parent) : QPushButton(parent) {
     connect(this, &QPushButton::released, this, [&](){
         if (m_player && !m_path.isEmpty()) {
@@ -13,6 +17,8 @@ SoundButton::SoundButton(QWidget* parent) : QPushButton(parent) {
             m_player->play();
         }
     });
+
+    createContextMenu();
 }
 
 SoundButton::SoundButton(QMediaPlayer* player, QWidget* parent) : SoundButton(parent) {
@@ -36,4 +42,27 @@ SoundButton& SoundButton::operator=(const SoundButton& other) {
     }
 
     return *this;
+}
+
+void SoundButton::createContextMenu() {
+    m_contextMenu = new QMenu(this);
+    QAction* renameAction = m_contextMenu->addAction("&Rename");
+    QAction* removeAction = m_contextMenu->addAction("&Delete");
+
+    connect(renameAction, &QAction::triggered, this, &SoundButton::renameButton);
+    connect(removeAction, &QAction::triggered, this, [this]() {
+        emit removeRequested(this);
+    });
+}
+
+void SoundButton::contextMenuEvent(QContextMenuEvent* event) {
+    m_contextMenu->exec(event->globalPos());
+}
+
+void SoundButton::renameButton() {
+    bool ok;
+    QString newName = QInputDialog::getText(this, "Rename Button", "Enter new name:", QLineEdit::Normal, text(), &ok);
+    if (ok && !newName.isEmpty()) {
+        setDisplayName(newName);
+    }
 }
