@@ -3,10 +3,15 @@
 #include <QInputDialog>
 #include <QLineEdit>
 #include <QContextMenuEvent>
+#include <QFile>
 
 SoundButton::SoundButton(QWidget* parent) : QPushButton(parent) {
     connect(this, &QPushButton::released, this, [&](){
         if (m_player && !m_path.isEmpty()) {
+            if (!QFile::exists(m_path)) {
+                emit fileNotFound(this);
+                return;
+            }
             m_player->setSource(QUrl::fromLocalFile(m_path));
             m_player->play();
         }

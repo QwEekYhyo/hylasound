@@ -17,6 +17,7 @@ public:
 
 private slots:
     void removeButton(SoundButton* button);
+    void onFileNotFound(SoundButton* button);
 
 private:
     static const QString JSON_SAVE_FILE;

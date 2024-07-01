@@ -1,5 +1,7 @@
 build/
 test-assets/
 
+save.json
+
 ### clangd thing ###
 .cache/

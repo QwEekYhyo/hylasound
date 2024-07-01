@@ -22,6 +22,7 @@ public:
 
 signals:
     void removeRequested(SoundButton* button);
+    void fileNotFound(SoundButton* button);
 
 protected:
     void contextMenuEvent(QContextMenuEvent* event) override;

@@ -1,4 +1,5 @@
 #include <buttongrid.hpp>
+#include <filenotfounddialog.hpp>
 
 #include <QFile>
 #include <QJsonObject>
@@ -24,6 +25,7 @@ void ButtonGrid::addButton(const QString& name, const QString& filepath) {
 
     m_layout->addWidget(button, row, column);
     connect(button, &SoundButton::removeRequested, this, &ButtonGrid::removeButton);
+    connect(button, &SoundButton::fileNotFound, this, &ButtonGrid::onFileNotFound);
 
     saveButtonsToJson();
 }
@@ -43,6 +45,29 @@ void ButtonGrid::removeButton(SoundButton* button) {
         }
 
         saveButtonsToJson();
+    }
+}
+
+void ButtonGrid::onFileNotFound(SoundButton* button) {
+    FileNotFoundDialog dialog(button->getSoundPath(), this);
+    dialog.exec();
+
+    switch (dialog.getResult()) {
+        case FileNotFoundDialog::Result::Dismiss:
+            break;
+
+        case FileNotFoundDialog::Result::Delete:
+            removeButton(button);
+            break;
+
+        case FileNotFoundDialog::Result::Browse: {
+                QString newFilePath = dialog.getNewFilePath();
+                if (!newFilePath.isEmpty()) {
+                    button->setSoundPath(newFilePath);
+                    saveButtonsToJson();
+                }
+            }
+            break;
     }
 }
 
