@@ -23,8 +23,8 @@ MainWindow::MainWindow() {
 
     setCentralWidget(m_mainWidget);
 
-    QMenu* fileMenu = menuBar()->addMenu("File");
-    QAction* openAction = fileMenu->addAction("Open");
+    QMenu* fileMenu = menuBar()->addMenu("&File");
+    QAction* openAction = fileMenu->addAction("&Open");
     connect(openAction, &QAction::triggered, this, &MainWindow::openAddButtonDialog);
 }
 
