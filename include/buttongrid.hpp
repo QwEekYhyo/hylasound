@@ -19,6 +19,9 @@ private slots:
     void removeButton(SoundButton* button);
 
 private:
+    static const QString JSON_SAVE_FILE;
+    static const size_t MAX_COLUMN;
+
     QList<SoundButton*> m_buttons;
     QGridLayout* m_layout;
     QMediaPlayer* m_player;
