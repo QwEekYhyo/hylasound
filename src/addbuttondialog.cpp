@@ -42,7 +42,12 @@ AddButtonDialog::AddButtonDialog(QWidget* parent) : QDialog(parent) {
 }
 
 void AddButtonDialog::browseFile() {
-    m_filePath = QFileDialog::getOpenFileName(this, "Select Sound File", "", "Audio Files (*.mp3 *.wav *.avi)");
+    m_filePath = QFileDialog::getOpenFileName(
+            this,
+            "Select Sound File",
+            "",
+            "Audio Files (*.mp3 *.wav *.WAV *.avi *.bwf *.ogg *.aif *.aiff *.caf)"
+    );
     m_filePathEdit->setText(m_filePath);
 }
 
