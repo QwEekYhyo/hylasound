@@ -1,11 +1,10 @@
 #include <mainwindow.hpp>
-#include <buttongrid.hpp>
+#include <addbuttondialog.hpp>
 
 #include <QLabel>
-#include <QMediaPlayer>
 #include <QAudioOutput>
-#include <QGridLayout>
-#include <QList>
+#include <QMenuBar>
+#include <QMessageBox>
 
 MainWindow::MainWindow() {
     setWindowTitle("Camille SoundBoard");
@@ -16,9 +15,30 @@ MainWindow::MainWindow() {
     player->setAudioOutput(audioOutput);
     audioOutput->setVolume(50);
 
-    ButtonGrid* mainWidget = new ButtonGrid(player);
-    mainWidget->addButton("test", "/home/logan/Music/test.mp3");
-    mainWidget->addButton("another test", "/home/logan/Music/test2.mp3");
+    m_mainWidget = new ButtonGrid(player);
+    /*
+    m_mainWidget->addButton("test", "/home/logan/Music/test.mp3");
+    m_mainWidget->addButton("another test", "/home/logan/Music/test2.mp3");
+    */
 
-    setCentralWidget(mainWidget);
+    setCentralWidget(m_mainWidget);
+
+    QMenu* fileMenu = menuBar()->addMenu("File");
+    QAction* openAction = fileMenu->addAction("Open");
+    connect(openAction, &QAction::triggered, this, &MainWindow::openAddButtonDialog);
+}
+
+void MainWindow::openAddButtonDialog() {
+    AddButtonDialog dialog(this);
+    if (dialog.exec() == QDialog::Accepted) {
+        QString name = dialog.getName();
+        QString filePath = dialog.getFilePath();
+
+        if (!name.isEmpty() && !filePath.isEmpty()) {
+            m_mainWidget->addButton(name, filePath);
+            QMessageBox::information(this, "Success", "Button added successfully!");
+        } else {
+            QMessageBox::warning(this, "Error", "Name or file path is empty. Button not added.");
+        }
+    }
 }
