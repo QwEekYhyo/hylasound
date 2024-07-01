@@ -32,8 +32,8 @@ AddButtonDialog::AddButtonDialog(QWidget* parent) : QDialog(parent) {
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     QPushButton* okButton = new QPushButton("OK");
     QPushButton* cancelButton = new QPushButton("Cancel");
-    buttonLayout->addWidget(okButton);
     buttonLayout->addWidget(cancelButton);
+    buttonLayout->addWidget(okButton);
     mainLayout->addLayout(buttonLayout);
 
     connect(m_browseButton, &QPushButton::clicked, this, &AddButtonDialog::browseFile);
@@ -42,7 +42,7 @@ AddButtonDialog::AddButtonDialog(QWidget* parent) : QDialog(parent) {
 }
 
 void AddButtonDialog::browseFile() {
-    m_filePath = QFileDialog::getOpenFileName(this, "Select Sound File", "", "Audio Files (*.mp3 *.wav)");
+    m_filePath = QFileDialog::getOpenFileName(this, "Select Sound File", "", "Audio Files (*.mp3 *.wav *.avi)");
     m_filePathEdit->setText(m_filePath);
 }
 
