@@ -14,11 +14,11 @@ file(GLOB_RECURSE HEADERS include/*.hpp)
 
 include_directories(include)
 
-qt_add_executable(soundboard.exe ${SOURCES} ${HEADERS} resources/soundboard.qrc)
+qt_add_executable(soundboard ${SOURCES} ${HEADERS} resources/soundboard.qrc)
 
-target_link_libraries(soundboard.exe PRIVATE Qt6::Widgets Qt6::Multimedia Qt6::Core)
+target_link_libraries(soundboard PRIVATE Qt6::Widgets Qt6::Multimedia Qt6::Core)
 
-set_target_properties(soundboard.exe PROPERTIES
+set_target_properties(soundboard PROPERTIES
     WIN32_EXECUTABLE ON
     MACOSX_BUNDLE ON
 )
