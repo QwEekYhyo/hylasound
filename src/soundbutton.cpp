@@ -23,3 +23,17 @@ SoundButton::SoundButton(const QString& name, const QString& path, QMediaPlayer*
     setDisplayName(name);
     setSoundPath(path);
 }
+
+SoundButton::SoundButton(const SoundButton& other) : SoundButton() {
+    operator=(other);
+}
+
+SoundButton& SoundButton::operator=(const SoundButton& other) {
+    if (this != &other) {
+        setPlayer(other.m_player);
+        setDisplayName(other.text());
+        setSoundPath(other.m_path);
+    }
+
+    return *this;
+}

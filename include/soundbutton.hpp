@@ -10,10 +10,13 @@ public:
     SoundButton(QWidget* parent = nullptr);
     SoundButton(QMediaPlayer* player, QWidget* parent = nullptr);
     SoundButton(const QString& name, const QString& path, QMediaPlayer* player, QWidget* parent = nullptr);
+    SoundButton(const SoundButton& other);
 
     inline void setPlayer(QMediaPlayer* player);
     inline void setDisplayName(const QString& name);
     inline void setSoundPath(const QString& path);
+
+    SoundButton& operator=(const SoundButton& other);
 
 private:
     QMediaPlayer* m_player = nullptr;
