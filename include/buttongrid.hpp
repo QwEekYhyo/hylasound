@@ -5,6 +5,7 @@
 #include <QList>
 #include <QGridLayout>
 #include <QMediaPlayer>
+#include <QJsonArray>
 
 class ButtonGrid : public QWidget {
     Q_OBJECT
@@ -21,5 +22,8 @@ private:
     QList<SoundButton*> m_buttons;
     QGridLayout* m_layout;
     QMediaPlayer* m_player;
+
+    void saveButtonsToJson();
+    void writeJsonFile(const QJsonArray& jsonArray);
 
 };

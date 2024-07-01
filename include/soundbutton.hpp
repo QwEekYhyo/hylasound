@@ -16,6 +16,7 @@ public:
     inline void setPlayer(QMediaPlayer* player);
     inline void setDisplayName(const QString& name);
     inline void setSoundPath(const QString& path);
+    inline const QString& getSoundPath();
 
     SoundButton& operator=(const SoundButton& other);
 
@@ -47,4 +48,8 @@ void SoundButton::setDisplayName(const QString& name) {
 
 void SoundButton::setSoundPath(const QString& path) {
     m_path = path;
+}
+
+const QString& SoundButton::getSoundPath() {
+    return m_path;
 }
