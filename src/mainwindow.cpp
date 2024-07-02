@@ -9,8 +9,9 @@
 #include <QApplication>
 
 MainWindow::MainWindow() {
-    setWindowTitle("Camille SoundBoard");
+    setWindowTitle("HylaSound");
     resize(1280, 720);
+    setWindowIcon(QIcon(":/hylasound.png"));
 
     QMediaPlayer* player = new QMediaPlayer;
     QAudioOutput* audioOutput = new QAudioOutput;

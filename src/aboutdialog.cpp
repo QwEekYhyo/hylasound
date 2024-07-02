@@ -4,8 +4,8 @@
 #include <QPushButton>
 
 AboutDialog::AboutDialog(QWidget* parent) : QDialog(parent) {
-    setWindowTitle("About Soundboard");
-    setFixedSize(300, 300);
+    setWindowTitle("About HylaSound");
+    setFixedSize(320, 300);
 
     QVBoxLayout* layout = new QVBoxLayout(this);
 
@@ -14,7 +14,7 @@ AboutDialog::AboutDialog(QWidget* parent) : QDialog(parent) {
     logoLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(logoLabel);
 
-    QLabel* nameLabel = new QLabel("Soundboard v1.0");
+    QLabel* nameLabel = new QLabel("HylaSound v1.0");
     nameLabel->setAlignment(Qt::AlignCenter);
     nameLabel->setStyleSheet("font-size: 18px; font-weight: bold;");
     layout->addWidget(nameLabel);
@@ -22,6 +22,14 @@ AboutDialog::AboutDialog(QWidget* parent) : QDialog(parent) {
     QLabel* descLabel = new QLabel("A simple soundboard application");
     descLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(descLabel);
+
+    QLabel* websiteLabel = new QLabel;
+    websiteLabel->setText("You can contribute to the source code <a href=\"https://github.com/QwEekYhyo/hylasound/\">here</a>");
+    websiteLabel->setTextFormat(Qt::RichText);
+    websiteLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    websiteLabel->setOpenExternalLinks(true);
+    websiteLabel->setAlignment(Qt::AlignCenter);
+    layout->addWidget(websiteLabel);
 
     QLabel* copyrightLabel = new QLabel("Copyright © 2024 Logan Lucas");
     copyrightLabel->setAlignment(Qt::AlignCenter);
