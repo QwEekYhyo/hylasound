@@ -31,4 +31,19 @@ target_link_libraries(soundboard PRIVATE
 set_target_properties(soundboard PROPERTIES
     WIN32_EXECUTABLE ON
     MACOSX_BUNDLE ON
+    MACOSX_BUNDLE_BUNDLE_NAME "SoundBoard"
 )
+
+install(TARGETS soundboard
+    BUNDLE  DESTINATION .
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+if (WIN32 OR APPLE)
+    qt_generate_deploy_app_script(
+        TARGET soundboard
+        OUTPUT_SCRIPT deploy_script
+        NO_UNSUPPORTED_PLATFORM_ERROR
+    )
+    install(SCRIPT ${deploy_script})
+endif()
