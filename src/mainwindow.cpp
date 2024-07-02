@@ -16,10 +16,6 @@ MainWindow::MainWindow() {
     audioOutput->setVolume(50);
 
     m_mainWidget = new ButtonGrid(player);
-    /*
-    m_mainWidget->addButton("test", "/home/logan/Music/test.mp3");
-    m_mainWidget->addButton("another test", "/home/logan/Music/test2.mp3");
-    */
 
     setCentralWidget(m_mainWidget);
 
