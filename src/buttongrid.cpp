@@ -38,10 +38,22 @@ void ButtonGrid::removeButton(SoundButton* button) {
         button->deleteLater();
 
         // Rearrange remaining buttons
-        for (size_t i = 0; i < m_buttons.size(); ++i) {
+        for (size_t i = 0; i < m_buttons.size(); i++) {
             size_t row = i / ButtonGrid::MAX_COLUMN;
             size_t col = i % ButtonGrid::MAX_COLUMN;
             m_layout->addWidget(m_buttons[i], row, col);
+        }
+
+        saveButtonsToJson();
+    }
+}
+
+void ButtonGrid::clearAllButtons() {
+    if (!m_buttons.isEmpty()) {
+        while (!m_buttons.isEmpty()) {
+            SoundButton* button = m_buttons.takeLast();
+            m_layout->removeWidget(button);
+            button->deleteLater();
         }
 
         saveButtonsToJson();

@@ -15,6 +15,9 @@ public:
 
     void addButton(const QString& name, const QString& filepath);
 
+public slots:
+    void clearAllButtons();
+
 private slots:
     void removeButton(SoundButton* button);
     void onFileNotFound(SoundButton* button);

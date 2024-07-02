@@ -18,4 +18,6 @@ private:
     ButtonGrid* m_mainWidget;
     QMediaPlayer* m_player;
 
+    void setupMenuBar();
+
 };

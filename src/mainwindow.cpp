@@ -5,6 +5,7 @@
 #include <QAudioOutput>
 #include <QMenuBar>
 #include <QMessageBox>
+#include <QApplication>
 
 MainWindow::MainWindow() {
     setWindowTitle("Camille SoundBoard");
@@ -19,9 +20,7 @@ MainWindow::MainWindow() {
 
     setCentralWidget(m_mainWidget);
 
-    QMenu* fileMenu = menuBar()->addMenu("&File");
-    QAction* openAction = fileMenu->addAction("&Open");
-    connect(openAction, &QAction::triggered, this, &MainWindow::openAddButtonDialog);
+    setupMenuBar();
 }
 
 void MainWindow::openAddButtonDialog() {
@@ -37,4 +36,18 @@ void MainWindow::openAddButtonDialog() {
             QMessageBox::warning(this, "Error", "Name or file path is empty. Button not added.");
         }
     }
+}
+
+void MainWindow::setupMenuBar() {
+    QMenu* fileMenu = menuBar()->addMenu("&File");
+    QAction* openAction = fileMenu->addAction("&Open");
+    connect(openAction, &QAction::triggered, this, &MainWindow::openAddButtonDialog);
+
+    fileMenu->addSeparator();
+
+    QAction* clearAction = fileMenu->addAction("Delete all buttons");
+    connect(clearAction, &QAction::triggered, m_mainWidget, &ButtonGrid::clearAllButtons);
+    QAction* quitAction = fileMenu->addAction("&Quit");
+    quitAction->setShortcut(Qt::Key_Q | Qt::CTRL);
+    connect(quitAction, &QAction::triggered, this, &QApplication::quit);
 }
