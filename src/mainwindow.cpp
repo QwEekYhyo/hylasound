@@ -39,6 +39,7 @@ void MainWindow::openAddButtonDialog() {
 }
 
 void MainWindow::setupMenuBar() {
+    // File
     QMenu* fileMenu = menuBar()->addMenu("&File");
     QAction* openAction = fileMenu->addAction("&Open");
     connect(openAction, &QAction::triggered, this, &MainWindow::openAddButtonDialog);
@@ -50,4 +51,11 @@ void MainWindow::setupMenuBar() {
     QAction* quitAction = fileMenu->addAction("&Quit");
     quitAction->setShortcut(Qt::Key_Q | Qt::CTRL);
     connect(quitAction, &QAction::triggered, this, &QApplication::quit);
+
+    // Help
+    QMenu* helpMenu = menuBar()->addMenu("&Help");
+    QAction* aboutQtAction = helpMenu->addAction("About &Qt");
+    connect(aboutQtAction, &QAction::triggered, this, [this](){
+        QMessageBox::aboutQt(this);
+    });
 }
