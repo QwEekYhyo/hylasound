@@ -1,5 +1,6 @@
 #include <mainwindow.hpp>
 #include <addbuttondialog.hpp>
+#include <aboutdialog.hpp>
 
 #include <QLabel>
 #include <QAudioOutput>
@@ -54,6 +55,11 @@ void MainWindow::setupMenuBar() {
 
     // Help
     QMenu* helpMenu = menuBar()->addMenu("&Help");
+    QAction* aboutAction = helpMenu->addAction("&About");
+    connect(aboutAction, &QAction::triggered, this, [this](){
+        AboutDialog about(this);
+        about.exec();
+    });
     QAction* aboutQtAction = helpMenu->addAction("About &Qt");
     connect(aboutQtAction, &QAction::triggered, this, [this](){
         QMessageBox::aboutQt(this);
