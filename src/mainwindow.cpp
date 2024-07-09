@@ -16,7 +16,6 @@ MainWindow::MainWindow() {
     QMediaPlayer* player = new QMediaPlayer;
     QAudioOutput* audioOutput = new QAudioOutput;
     player->setAudioOutput(audioOutput);
-    audioOutput->setVolume(50);
 
     m_mainWidget = new ButtonGrid(player);
 
