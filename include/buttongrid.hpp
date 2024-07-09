@@ -26,9 +26,9 @@ private:
     static const QString JSON_SAVE_FILE;
     static const size_t MAX_COLUMN;
 
+    size_t m_cursor{0};
     QList<SoundButton*> m_buttons;
     QGridLayout* m_layout;
-    QMediaPlayer* m_player;
 
     void saveButtonsToJson();
     void writeJsonFile(const QJsonArray& jsonArray);

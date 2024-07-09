@@ -9,51 +9,63 @@ const QString ButtonGrid::JSON_SAVE_FILE = "save.json";
 const size_t ButtonGrid::MAX_COLUMN = 7;
 
 ButtonGrid::ButtonGrid(QMediaPlayer* player, QWidget* parent) : QWidget(parent) {
-    m_player = player;
     m_layout = new QGridLayout(this);
     m_buttons.reserve(50);
+
+    for (size_t i = 0; i < 4 * ButtonGrid::MAX_COLUMN; i++) {
+        SoundButton* placeholderButton = new SoundButton(player, this);
+        placeholderButton->setDisabled(true);
+        m_buttons.append(placeholderButton);
+
+        size_t row = i / ButtonGrid::MAX_COLUMN;
+        size_t column = i % ButtonGrid::MAX_COLUMN;
+        m_layout->addWidget(placeholderButton, row, column);
+    }
 
     loadButtonsFromJson();
 }
 
 void ButtonGrid::addButton(const QString& name, const QString& filepath) {
-    SoundButton* button = new SoundButton(name, filepath, m_player, this);
-    m_buttons.append(button);
+    SoundButton* button = m_buttons.at(m_cursor);
+    button->setDisplayName(name);
+    button->setSoundPath(filepath);
+    button->setDisabled(false);
 
-    size_t row = (m_buttons.size() - 1) / ButtonGrid::MAX_COLUMN;
-    size_t column = (m_buttons.size() - 1) % ButtonGrid::MAX_COLUMN;
-
-    m_layout->addWidget(button, row, column);
     connect(button, &SoundButton::removeRequested, this, &ButtonGrid::removeButton);
     connect(button, &SoundButton::fileNotFound, this, &ButtonGrid::onFileNotFound);
 
+    m_cursor++;
     saveButtonsToJson();
 }
 
 void ButtonGrid::removeButton(SoundButton* button) {
     int index = m_buttons.indexOf(button);
     if (index != -1) {
-        m_buttons.removeAt(index);
-        m_layout->removeWidget(button);
-        button->deleteLater();
+        button->setDisplayName("");
+        button->setDisabled(true);
+        // Rearrange item in the list
+        for (size_t i = index; i < m_cursor; i++) {
+            m_buttons.move(i + 1, i);
+        }
 
         // Rearrange remaining buttons
-        for (size_t i = 0; i < m_buttons.size(); i++) {
+        for (size_t i = index; i <= m_cursor; i++) {
             size_t row = i / ButtonGrid::MAX_COLUMN;
             size_t col = i % ButtonGrid::MAX_COLUMN;
             m_layout->addWidget(m_buttons[i], row, col);
         }
 
+        m_cursor--;
         saveButtonsToJson();
     }
 }
 
 void ButtonGrid::clearAllButtons() {
-    if (!m_buttons.isEmpty()) {
-        while (!m_buttons.isEmpty()) {
-            SoundButton* button = m_buttons.takeLast();
-            m_layout->removeWidget(button);
-            button->deleteLater();
+    if (m_cursor != 0) {
+        while (m_cursor != 0) {
+            SoundButton* button = m_buttons[m_cursor - 1];
+            // need to call this method without saving to JSON
+            removeButton(button);
         }
 
         saveButtonsToJson();
@@ -86,7 +98,7 @@ void ButtonGrid::onFileNotFound(SoundButton* button) {
 void ButtonGrid::saveButtonsToJson() {
     QJsonArray jsonArray;
 
-    for (int i = 0; i < m_buttons.size(); i++) {
+    for (int i = 0; i < m_cursor; i++) {
         QJsonObject buttonObject;
 
         buttonObject["id"] = i;
@@ -114,6 +126,7 @@ void ButtonGrid::loadButtonsFromJson() {
 
     for (size_t i = 0; i < jsonArray.size(); i++) {
         QJsonObject buttonObject = jsonArray[i].toObject();
+        // need to call this method without saving to JSON
         addButton(buttonObject["name"].toString(), buttonObject["soundPath"].toString());
     }
 }
