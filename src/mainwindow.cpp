@@ -31,8 +31,10 @@ void MainWindow::openAddButtonDialog() {
         QString filePath = dialog.getFilePath();
 
         if (!name.isEmpty() && !filePath.isEmpty()) {
-            m_mainWidget->addButton(name, filePath);
-            QMessageBox::information(this, "Success", "Button added successfully!");
+            if (m_mainWidget->addButton(name, filePath))
+                QMessageBox::information(this, "Success", "Button added successfully!");
+            else
+                QMessageBox::critical(this, "Error", "Grid is full. Button not added.");
         } else {
             QMessageBox::warning(this, "Error", "Name or file path is empty. Button not added.");
         }

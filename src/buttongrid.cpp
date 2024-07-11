@@ -10,6 +10,8 @@ const size_t ButtonGrid::MAX_COLUMN = 7;
 
 ButtonGrid::ButtonGrid(QMediaPlayer* player, QWidget* parent) : QWidget(parent) {
     m_layout = new QGridLayout(this);
+    m_layout->setHorizontalSpacing(10);
+    m_layout->setVerticalSpacing(20);
     m_buttons.reserve(50);
 
     for (size_t i = 0; i < 4 * ButtonGrid::MAX_COLUMN; i++) {
@@ -25,17 +27,21 @@ ButtonGrid::ButtonGrid(QMediaPlayer* player, QWidget* parent) : QWidget(parent) 
     loadButtonsFromJson();
 }
 
-void ButtonGrid::addButton(const QString& name, const QString& filepath) {
-    SoundButton* button = m_buttons.at(m_cursor);
-    button->setDisplayName(name);
-    button->setSoundPath(filepath);
-    button->setDisabled(false);
+bool ButtonGrid::addButton(const QString& name, const QString& filepath) {
+    if (m_cursor < m_buttons.size()) {
+        SoundButton* button = m_buttons.at(m_cursor);
+        button->setDisplayName(name);
+        button->setSoundPath(filepath);
+        button->setDisabled(false);
 
-    connect(button, &SoundButton::removeRequested, this, &ButtonGrid::removeButton);
-    connect(button, &SoundButton::fileNotFound, this, &ButtonGrid::onFileNotFound);
+        connect(button, &SoundButton::removeRequested, this, &ButtonGrid::removeButton);
+        connect(button, &SoundButton::fileNotFound, this, &ButtonGrid::onFileNotFound);
 
-    m_cursor++;
-    saveButtonsToJson();
+        m_cursor++;
+        saveButtonsToJson();
+        return true;
+    }
+    return false;
 }
 
 void ButtonGrid::removeButton(SoundButton* button) {
@@ -44,12 +50,12 @@ void ButtonGrid::removeButton(SoundButton* button) {
         button->setDisplayName("");
         button->setDisabled(true);
         // Rearrange item in the list
-        for (size_t i = index; i < m_cursor; i++) {
+        for (size_t i = index; i < m_cursor && i < m_buttons.size() - 1; i++) {
             m_buttons.move(i + 1, i);
         }
 
         // Rearrange remaining buttons
-        for (size_t i = index; i <= m_cursor; i++) {
+        for (size_t i = index; i <= m_cursor && i < m_buttons.size(); i++) {
             size_t row = i / ButtonGrid::MAX_COLUMN;
             size_t col = i % ButtonGrid::MAX_COLUMN;
             m_layout->addWidget(m_buttons[i], row, col);

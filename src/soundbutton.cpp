@@ -6,6 +6,7 @@
 #include <QFile>
 
 SoundButton::SoundButton(QWidget* parent) : QPushButton(parent) {
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     connect(this, &QPushButton::released, this, [&](){
         if (m_player && !m_path.isEmpty()) {
             if (!QFile::exists(m_path)) {

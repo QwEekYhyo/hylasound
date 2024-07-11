@@ -13,7 +13,7 @@ class ButtonGrid : public QWidget {
 public:
     ButtonGrid(QMediaPlayer* player, QWidget* parent = nullptr);
 
-    void addButton(const QString& name, const QString& filepath);
+    bool addButton(const QString& name, const QString& filepath);
 
 public slots:
     void clearAllButtons();
