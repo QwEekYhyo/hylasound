@@ -1,12 +1,14 @@
 #include <mainwindow.hpp>
 #include <addbuttondialog.hpp>
 #include <aboutdialog.hpp>
+#include <globalstyle.hpp>
 
 #include <QLabel>
 #include <QAudioOutput>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QApplication>
+#include <QFile>
 
 MainWindow::MainWindow() {
     setWindowTitle("HylaSound");
@@ -54,6 +56,30 @@ void MainWindow::setupMenuBar() {
     QAction* quitAction = fileMenu->addAction("&Quit");
     quitAction->setShortcut(Qt::Key_Q | Qt::CTRL);
     connect(quitAction, &QAction::triggered, this, &QApplication::quit);
+
+    // Settings
+    QMenu* settingsMenu = menuBar()->addMenu("&Settings");
+    QAction* styleAction = settingsMenu->addAction("Awesome style");
+    styleAction->setCheckable(true);
+    connect(styleAction, &QAction::triggered, this, [this](bool checked){
+        if (checked) {
+            QFile file(":/styles/test.qss");
+            if (file.open(QIODeviceBase::ReadOnly)) {
+                setStyleSheet(file.readAll());
+                file.close();
+                GlobalStyle newStyle = GlobalStyle::AWESOME;
+                m_settings.setValue("globalstyle", newStyle.toString());
+            }
+        } else {
+            setStyleSheet("");
+            GlobalStyle newStyle = GlobalStyle::DEFAULT;
+            m_settings.setValue("globalstyle", newStyle.toString());
+        }
+    });
+    // Read style stored in app settings
+    QString storedStyle = m_settings.value("globalstyle", "none").toString();
+    if (GlobalStyle::fromString(storedStyle) == GlobalStyle::AWESOME)
+        styleAction->trigger();
 
     // Help
     QMenu* helpMenu = menuBar()->addMenu("&Help");

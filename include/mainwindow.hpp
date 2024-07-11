@@ -4,6 +4,7 @@
 
 #include <QMainWindow>
 #include <QMediaPlayer>
+#include <QSettings>
 
 class MainWindow final : public QMainWindow {
     Q_OBJECT
@@ -15,6 +16,7 @@ private slots:
     void openAddButtonDialog();
 
 private:
+    QSettings m_settings;
     ButtonGrid* m_mainWidget;
     QMediaPlayer* m_player;
 

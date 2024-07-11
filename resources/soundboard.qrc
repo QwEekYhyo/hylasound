@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>./hylasound.png</file>
+        <file>./styles/test.qss</file>
     </qresource>
 </RCC>
