@@ -21,7 +21,7 @@ public:
     SoundButton& operator=(const SoundButton& other);
 
 signals:
-    void removeRequested(SoundButton* button);
+    void removeRequested(SoundButton* button, bool doSave);
     void fileNotFound(SoundButton* button);
 
 protected:

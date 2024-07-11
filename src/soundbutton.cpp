@@ -51,7 +51,7 @@ void SoundButton::createContextMenu() {
 
     connect(renameAction, &QAction::triggered, this, &SoundButton::renameButton);
     connect(removeAction, &QAction::triggered, this, [this]() {
-        emit removeRequested(this);
+        emit removeRequested(this, true);
     });
 }
 

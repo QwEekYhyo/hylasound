@@ -13,13 +13,13 @@ class ButtonGrid : public QWidget {
 public:
     ButtonGrid(QMediaPlayer* player, QWidget* parent = nullptr);
 
-    bool addButton(const QString& name, const QString& filepath);
+    bool addButton(const QString& name, const QString& filepath, bool doSave = true);
 
 public slots:
     void clearAllButtons();
 
 private slots:
-    void removeButton(SoundButton* button);
+    void removeButton(SoundButton* button, bool doSave = true);
     void onFileNotFound(SoundButton* button);
 
 private:
