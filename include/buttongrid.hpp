@@ -37,6 +37,8 @@ private:
     void loadButtonsFromJson();
     QJsonArray readJsonFile();
 
+    void paintEvent(QPaintEvent* event);
+
 };
 
 const QString& ButtonGrid::getSaveFilePath() const {

@@ -4,8 +4,13 @@
 #include <QLineEdit>
 #include <QContextMenuEvent>
 #include <QFile>
+#include <QGraphicsOpacityEffect>
 
 SoundButton::SoundButton(QWidget* parent) : QPushButton(parent) {
+    QFont font = QPushButton::font();
+    font.setPointSize(20);
+    setFont(font);
+
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     connect(this, &QPushButton::released, this, [&](){
         if (m_player && !m_path.isEmpty()) {
@@ -44,6 +49,14 @@ SoundButton& SoundButton::operator=(const SoundButton& other) {
     return *this;
 }
 
+void SoundButton::renameButton() {
+    bool ok;
+    QString newName = QInputDialog::getText(this, "Rename Button", "Enter new name:", QLineEdit::Normal, text(), &ok);
+    if (ok && !newName.isEmpty()) {
+        setDisplayName(newName);
+    }
+}
+
 void SoundButton::createContextMenu() {
     m_contextMenu = new QMenu(this);
     QAction* renameAction = m_contextMenu->addAction("&Rename Button");
@@ -59,10 +72,16 @@ void SoundButton::contextMenuEvent(QContextMenuEvent* event) {
     m_contextMenu->exec(event->globalPos());
 }
 
-void SoundButton::renameButton() {
-    bool ok;
-    QString newName = QInputDialog::getText(this, "Rename Button", "Enter new name:", QLineEdit::Normal, text(), &ok);
-    if (ok && !newName.isEmpty()) {
-        setDisplayName(newName);
+void SoundButton::enterEvent(QEnterEvent* event) {
+    if (isEnabled()) {
+        QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
+        effect->setOpacity(0.7);
+        setGraphicsEffect(effect);
     }
+    QPushButton::enterEvent(event);
+}
+
+void SoundButton::leaveEvent(QEvent* event) {
+    setGraphicsEffect(nullptr);
+    QPushButton::leaveEvent(event);
 }

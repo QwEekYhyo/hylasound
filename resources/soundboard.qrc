@@ -1,6 +1,10 @@
 <RCC>
     <qresource prefix="/">
-        <file>./hylasound.png</file>
-        <file>./styles/test.qss</file>
+        <file alias="hylasound.png">./images/hylasound.png</file>
+        <file>./images/awesome_background.png</file>
+        <file>./images/awesome_enabled_button.png</file>
+        <file>./images/awesome_disabled_button.png</file>
+
+        <file>./styles/awesome.qss</file>
     </qresource>
 </RCC>

@@ -4,6 +4,8 @@
 #include <QFile>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QStyleOption>
+#include <QPainter>
 
 const size_t ButtonGrid::MAX_COLUMN = 7;
 
@@ -34,7 +36,8 @@ bool ButtonGrid::addButton(const QString& name, const QString& filepath, bool do
         SoundButton* button = m_buttons.at(m_cursor);
         button->setDisplayName(name);
         button->setSoundPath(filepath);
-        button->setDisabled(false);
+        button->setEnabled(true);
+        button->style()->polish(button); // update style of added button
 
         connect(button, &SoundButton::removeRequested, this, &ButtonGrid::removeButton);
         connect(button, &SoundButton::fileNotFound, this, &ButtonGrid::onFileNotFound);
@@ -52,6 +55,7 @@ void ButtonGrid::removeButton(SoundButton* button, bool doSave) {
     if (index != -1) {
         button->setDisplayName("");
         button->setDisabled(true);
+        button->style()->polish(button); // update style of "removed" button
         // Rearrange item in the list
         for (size_t i = index; i < m_cursor && i < m_buttons.size() - 1; i++) {
             m_buttons.move(i + 1, i);
@@ -150,4 +154,11 @@ QJsonArray ButtonGrid::readJsonFile() {
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
 
     return loadDoc.array();
+}
+
+void ButtonGrid::paintEvent(QPaintEvent* event) {
+    QStyleOption option;
+    option.initFrom(this);
+    QPainter painter(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &option, &painter, this);
 }

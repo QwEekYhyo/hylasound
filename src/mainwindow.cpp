@@ -73,7 +73,7 @@ void MainWindow::setupMenuBar() {
     styleAction->setCheckable(true);
     connect(styleAction, &QAction::triggered, this, [this](bool checked){
         if (checked) {
-            QFile file(":/styles/test.qss");
+            QFile file(":/styles/awesome.qss");
             if (file.open(QIODeviceBase::ReadOnly)) {
                 setStyleSheet(file.readAll());
                 file.close();

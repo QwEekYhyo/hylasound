@@ -1,6 +1,6 @@
 # $${{\color{green}Hyla}}Sound$$
 <p align="center">
-    <img src="resources/hylasound.png" width="200" height="200" />
+    <img src="resources/images/hylasound.png" width="200" height="200" />
 </p>
 
 Basic soundboard, you can add your audio files to create buttons in the soundboard and play them. I will later try to send the audio output through the mic so that people in voice chat can also hear your sounds. I am developping this as one of the surprises for my girlfriend for our first year anniversary. If you don't see how this is romantic, don't worry about it.
