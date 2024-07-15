@@ -1,10 +1,14 @@
 #include <soundbutton.hpp>
+#include <globalstyle.hpp>
 
 #include <QInputDialog>
 #include <QLineEdit>
 #include <QContextMenuEvent>
 #include <QFile>
 #include <QGraphicsOpacityEffect>
+#include <QPainter>
+#include <QPainterPath>
+#include <QSettings>
 
 SoundButton::SoundButton(QWidget* parent) : QPushButton(parent) {
     QFont font = QPushButton::font();
@@ -84,4 +88,42 @@ void SoundButton::enterEvent(QEnterEvent* event) {
 void SoundButton::leaveEvent(QEvent* event) {
     setGraphicsEffect(nullptr);
     QPushButton::leaveEvent(event);
+}
+
+// This method is called a hundred times per second I don't know if
+// all this logic being spammed is good practice but whatever
+void SoundButton::paintEvent(QPaintEvent* event) {
+    QPushButton::paintEvent(event);
+    QSettings settings;
+    QString storedStyle = settings.value("globalstyle", "none").toString();
+
+    if (GlobalStyle::fromString(storedStyle) == GlobalStyle::AWESOME) {
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::TextAntialiasing);
+
+        QFont font = this->font();
+        painter.setFont(font);
+
+        QString text = this->text();
+        QRect rect = this->rect();
+
+        QFontMetrics fm(font);
+        int x = (rect.width() - fm.horizontalAdvance(text)) / 2;
+        int y = (rect.height() + fm.ascent() - fm.descent()) / 2;
+
+        QPainterPath path;
+        path.addText(x, y, font, text);
+
+        // Draw the stroke
+        QPen pen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+        painter.setPen(pen);
+        painter.setBrush(Qt::NoBrush);
+        painter.drawPath(path);
+
+        // Draw the fill
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(QColor("#ffabd2"));
+        painter.drawPath(path);
+    }
 }

@@ -38,6 +38,7 @@ private:
 
     void enterEvent(QEnterEvent* event) override;
     void leaveEvent(QEvent* event) override;
+    void paintEvent(QPaintEvent* event) override;
 
 };
 
