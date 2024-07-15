@@ -14,6 +14,8 @@ public:
     ButtonGrid(QMediaPlayer* player, QString jsonSaveFilePath, QWidget* parent = nullptr);
 
     bool addButton(const QString& name, const QString& filepath, bool doSave = true);
+    inline const QString& getSaveFilePath() const;
+    inline void setSaveFilePath(const QString& path);
 
 public slots:
     void clearAllButtons();
@@ -36,3 +38,11 @@ private:
     QJsonArray readJsonFile();
 
 };
+
+const QString& ButtonGrid::getSaveFilePath() const {
+    return m_saveFilePath;
+}
+
+void ButtonGrid::setSaveFilePath(const QString& path) {
+    m_saveFilePath = path;
+}

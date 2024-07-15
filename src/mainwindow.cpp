@@ -1,5 +1,6 @@
 #include <mainwindow.hpp>
 #include <addbuttondialog.hpp>
+#include <tabnamedialog.hpp>
 #include <aboutdialog.hpp>
 #include <globalstyle.hpp>
 
@@ -21,32 +22,9 @@ MainWindow::MainWindow() {
 }
 
 QString MainWindow::openNewTabDialog() {
-    QDialog dialog(this);
-    dialog.setWindowTitle("Add New Tab");
-    dialog.setModal(true);
-
-    QVBoxLayout* mainLayout = new QVBoxLayout(&dialog);
-    QLabel* label = new QLabel("Enter a name for the new tab:");
-    mainLayout->addWidget(label);
-
-    QLineEdit* lineEdit = new QLineEdit();
-    mainLayout->addWidget(lineEdit);
-
-    QHBoxLayout* buttonLayout = new QHBoxLayout();
-    mainLayout->addLayout(buttonLayout);
-
-    QPushButton* okButton = new QPushButton("OK");
-    QPushButton* cancelButton = new QPushButton("Cancel");
-    buttonLayout->addWidget(okButton);
-    buttonLayout->addWidget(cancelButton);
-
-    QObject::connect(okButton, &QPushButton::clicked, &dialog, &QDialog::accept);
-    QObject::connect(cancelButton, &QPushButton::clicked, &dialog, &QDialog::reject);
-
-    lineEdit->setFocus();
-
+    TabNameDialog dialog(this);
     if (dialog.exec() == QDialog::Accepted) {
-        return lineEdit->text().trimmed();
+        return dialog.getName().trimmed();
     } else {
         return QString();
     }
@@ -55,7 +33,7 @@ QString MainWindow::openNewTabDialog() {
 void MainWindow::openAddButtonDialog() {
     AddButtonDialog dialog(this);
     if (dialog.exec() == QDialog::Accepted) {
-        QString name = dialog.getName();
+        QString name = dialog.getName().trimmed();
         QString filePath = dialog.getFilePath();
 
         if (!name.isEmpty() && !filePath.isEmpty()) {

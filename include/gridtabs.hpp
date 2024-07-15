@@ -18,4 +18,7 @@ private:
     QString m_saveDirectory;
     QMediaPlayer* m_player;
 
+    void contextMenuEvent(QContextMenuEvent* event) override;
+    QMenu* createContextMenu(int tabIndex);
+
 };
