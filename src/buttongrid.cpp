@@ -5,16 +5,18 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
-const QString ButtonGrid::JSON_SAVE_FILE = "save.json";
 const size_t ButtonGrid::MAX_COLUMN = 7;
 
-ButtonGrid::ButtonGrid(QMediaPlayer* player, QWidget* parent) : QWidget(parent) {
+ButtonGrid::ButtonGrid(QMediaPlayer* player, QString jsonSaveFilePath, QWidget* parent) : QWidget(parent) {
+    m_saveFilePath = jsonSaveFilePath;
+
     m_layout = new QGridLayout(this);
     m_layout->setHorizontalSpacing(10);
     m_layout->setVerticalSpacing(20);
-    m_buttons.reserve(50);
+    size_t numberOfButtons = 4 * ButtonGrid::MAX_COLUMN;
+    m_buttons.reserve(numberOfButtons + 2);
 
-    for (size_t i = 0; i < 4 * ButtonGrid::MAX_COLUMN; i++) {
+    for (size_t i = 0; i < numberOfButtons; i++) {
         SoundButton* placeholderButton = new SoundButton(player, this);
         placeholderButton->setDisabled(true);
         m_buttons.append(placeholderButton);
@@ -118,7 +120,7 @@ void ButtonGrid::saveButtonsToJson() {
 }
 
 void ButtonGrid::writeJsonFile(const QJsonArray& jsonArray) {
-    QFile saveFile(ButtonGrid::JSON_SAVE_FILE);
+    QFile saveFile(m_saveFilePath);
     if (!saveFile.open(QIODevice::WriteOnly)) {
         qWarning("Couldn't open save file.");
         return;
@@ -138,7 +140,7 @@ void ButtonGrid::loadButtonsFromJson() {
 }
 
 QJsonArray ButtonGrid::readJsonFile() {
-    QFile loadFile(ButtonGrid::JSON_SAVE_FILE);
+    QFile loadFile(m_saveFilePath);
     if (!loadFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
         return QJsonArray();

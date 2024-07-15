@@ -4,7 +4,6 @@
 #include <globalstyle.hpp>
 
 #include <QLabel>
-#include <QAudioOutput>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QApplication>
@@ -15,12 +14,7 @@ MainWindow::MainWindow() {
     resize(1280, 720);
     setWindowIcon(QIcon(":/hylasound.png"));
 
-    QMediaPlayer* player = new QMediaPlayer;
-    QAudioOutput* audioOutput = new QAudioOutput;
-    player->setAudioOutput(audioOutput);
-
-    m_mainWidget = new ButtonGrid(player);
-
+    m_mainWidget = new GridTabs(this);
     setCentralWidget(m_mainWidget);
 
     setupMenuBar();
@@ -33,7 +27,7 @@ void MainWindow::openAddButtonDialog() {
         QString filePath = dialog.getFilePath();
 
         if (!name.isEmpty() && !filePath.isEmpty()) {
-            if (m_mainWidget->addButton(name, filePath))
+            if (m_mainWidget->currentGrid()->addButton(name, filePath))
                 QMessageBox::information(this, "Success", "Button added successfully!");
             else
                 QMessageBox::critical(this, "Error", "Grid is full. Button not added.");
@@ -52,7 +46,7 @@ void MainWindow::setupMenuBar() {
     fileMenu->addSeparator();
 
     QAction* clearAction = fileMenu->addAction("Delete all buttons");
-    connect(clearAction, &QAction::triggered, m_mainWidget, &ButtonGrid::clearAllButtons);
+    connect(clearAction, &QAction::triggered, m_mainWidget->currentGrid(), &ButtonGrid::clearAllButtons);
     QAction* quitAction = fileMenu->addAction("&Quit");
     quitAction->setShortcut(Qt::Key_Q | Qt::CTRL);
     connect(quitAction, &QAction::triggered, this, &QApplication::quit);

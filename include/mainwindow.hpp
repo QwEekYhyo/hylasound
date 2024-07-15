@@ -1,9 +1,8 @@
 #pragma once
 
-#include <buttongrid.hpp>
+#include <gridtabs.hpp>
 
 #include <QMainWindow>
-#include <QMediaPlayer>
 #include <QSettings>
 
 class MainWindow final : public QMainWindow {
@@ -17,8 +16,7 @@ private slots:
 
 private:
     QSettings m_settings;
-    ButtonGrid* m_mainWidget;
-    QMediaPlayer* m_player;
+    GridTabs* m_mainWidget;
 
     void setupMenuBar();
 
