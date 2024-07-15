@@ -46,8 +46,8 @@ SoundButton& SoundButton::operator=(const SoundButton& other) {
 
 void SoundButton::createContextMenu() {
     m_contextMenu = new QMenu(this);
-    QAction* renameAction = m_contextMenu->addAction("&Rename");
-    QAction* removeAction = m_contextMenu->addAction("&Delete");
+    QAction* renameAction = m_contextMenu->addAction("&Rename Button");
+    QAction* removeAction = m_contextMenu->addAction("&Remove Button");
 
     connect(renameAction, &QAction::triggered, this, &SoundButton::renameButton);
     connect(removeAction, &QAction::triggered, this, [this]() {
