@@ -11,6 +11,8 @@ class MainWindow final : public QMainWindow {
 public:
     MainWindow();
 
+    QString openNewTabDialog();
+
 private slots:
     void openAddButtonDialog();
 

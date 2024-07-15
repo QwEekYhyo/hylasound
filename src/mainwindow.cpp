@@ -20,6 +20,38 @@ MainWindow::MainWindow() {
     setupMenuBar();
 }
 
+QString MainWindow::openNewTabDialog() {
+    QDialog dialog(this);
+    dialog.setWindowTitle("Add New Tab");
+    dialog.setModal(true);
+
+    QVBoxLayout* mainLayout = new QVBoxLayout(&dialog);
+    QLabel* label = new QLabel("Enter a name for the new tab:");
+    mainLayout->addWidget(label);
+
+    QLineEdit* lineEdit = new QLineEdit();
+    mainLayout->addWidget(lineEdit);
+
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    mainLayout->addLayout(buttonLayout);
+
+    QPushButton* okButton = new QPushButton("OK");
+    QPushButton* cancelButton = new QPushButton("Cancel");
+    buttonLayout->addWidget(okButton);
+    buttonLayout->addWidget(cancelButton);
+
+    QObject::connect(okButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    QObject::connect(cancelButton, &QPushButton::clicked, &dialog, &QDialog::reject);
+
+    lineEdit->setFocus();
+
+    if (dialog.exec() == QDialog::Accepted) {
+        return lineEdit->text().trimmed();
+    } else {
+        return QString();
+    }
+}
+
 void MainWindow::openAddButtonDialog() {
     AddButtonDialog dialog(this);
     if (dialog.exec() == QDialog::Accepted) {
@@ -42,10 +74,16 @@ void MainWindow::setupMenuBar() {
     QMenu* fileMenu = menuBar()->addMenu("&File");
     QAction* openAction = fileMenu->addAction("&Open");
     connect(openAction, &QAction::triggered, this, &MainWindow::openAddButtonDialog);
+    QAction* newTabAction = fileMenu->addAction("Add New &Tab");
+    connect(newTabAction, &QAction::triggered, this, [this](){
+        QString tabName = openNewTabDialog();
+        if (!tabName.isEmpty())
+            m_mainWidget->addGrid(tabName);
+    });
 
     fileMenu->addSeparator();
 
-    QAction* clearAction = fileMenu->addAction("Delete all buttons");
+    QAction* clearAction = fileMenu->addAction("Delete All Buttons");
     connect(clearAction, &QAction::triggered, m_mainWidget->currentGrid(), &ButtonGrid::clearAllButtons);
     QAction* quitAction = fileMenu->addAction("&Quit");
     quitAction->setShortcut(Qt::Key_Q | Qt::CTRL);
@@ -53,7 +91,7 @@ void MainWindow::setupMenuBar() {
 
     // Settings
     QMenu* settingsMenu = menuBar()->addMenu("&Settings");
-    QAction* styleAction = settingsMenu->addAction("Awesome style");
+    QAction* styleAction = settingsMenu->addAction("Awesome Style");
     styleAction->setCheckable(true);
     connect(styleAction, &QAction::triggered, this, [this](bool checked){
         if (checked) {
