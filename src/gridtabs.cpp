@@ -69,6 +69,9 @@ QMenu* GridTabs::createContextMenu(int tabIndex) {
         saveFile.remove();
         removeTab(tabIndex);
         toDelete->deleteLater();
+
+        if (count() == 0)
+            addGrid("New tab");
     });
 
     return menu;
