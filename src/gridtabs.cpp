@@ -9,6 +9,8 @@
 #include <QMenu>
 
 GridTabs::GridTabs(QWidget* parent) : QTabWidget(parent), m_saveDirectory(QCoreApplication::applicationDirPath() + "/saves") {
+    setDocumentMode(true);
+
     m_player = new QMediaPlayer;
     QAudioOutput* audioOutput = new QAudioOutput;
     m_player->setAudioOutput(audioOutput);

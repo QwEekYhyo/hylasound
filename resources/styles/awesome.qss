@@ -1,3 +1,39 @@
+MainWindow {
+    background-color: #ffdddf;
+}
+
+QMenuBar {
+    background-color: #ffdddf;
+    color: #333333;
+}
+
+QMenu {
+    background-color: #ffdddf;
+    color: #333333;
+    border: 1px solid #ff4374;
+}
+
+QMenu::separator {
+    background-color: #ff4374;
+}
+
+QMenu:selected {
+    background-color: #bba2a3;
+}
+
+QTabBar {
+    background-color: #ff4374;
+    color: #f0f0f0;
+}
+
+QTabBar:selected {
+    color: #ffffff;
+}
+
+GridTabs {
+    background-color: #ff4374;
+}
+
 ButtonGrid {
     background-image: url(:/images/awesome_background.png);
 }
@@ -10,13 +46,4 @@ SoundButton {
 
 SoundButton[enabled="false"] {
     border-image: url(:/images/awesome_disabled_button.png) 0 0 0 0 stretch stretch;
-}
-
-QTabBar {
-    background-color: #ff4374;
-    color: #f0f0f0;
-}
-
-QTabBar:selected {
-    color: #ffffff;
 }
