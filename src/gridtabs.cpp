@@ -23,7 +23,7 @@ GridTabs::GridTabs(QWidget* parent) : QTabWidget(parent), m_saveDirectory(QCoreA
         addGrid(file.split('.')[0]);
     }
     if (count() == 0)
-        addGrid("New tab");
+        addEmptyTab();
 }
 
 ButtonGrid* GridTabs::currentGrid() const {
@@ -33,6 +33,10 @@ ButtonGrid* GridTabs::currentGrid() const {
 void GridTabs::addGrid(const QString& name) {
     ButtonGrid* grid = new ButtonGrid(m_player, m_saveDirectory + '/' + name + ".json", this);
     addTab(grid, name);
+}
+
+void GridTabs::addEmptyTab() {
+    addGrid(tr("New tab"));
 }
 
 void GridTabs::contextMenuEvent(QContextMenuEvent* event) {
@@ -47,7 +51,7 @@ void GridTabs::contextMenuEvent(QContextMenuEvent* event) {
 QMenu* GridTabs::createContextMenu(int tabIndex) {
     QMenu* menu = new QMenu(this);
 
-    QAction* renameAction = menu->addAction("Rename Tab");
+    QAction* renameAction = menu->addAction(tr("Rename Tab"));
     connect(renameAction, &QAction::triggered, this, [this, tabIndex]() {
         ButtonGrid* toRename = (ButtonGrid*) widget(tabIndex);
         TabNameDialog dialog(this, true);
@@ -62,7 +66,7 @@ QMenu* GridTabs::createContextMenu(int tabIndex) {
         }
     });
 
-    QAction* removeAction = menu->addAction("Remove Tab");
+    QAction* removeAction = menu->addAction(tr("Remove Tab"));
     connect(removeAction, &QAction::triggered, this, [this, tabIndex]() {
         ButtonGrid* toDelete = (ButtonGrid*) widget(tabIndex);
         QFile saveFile(toDelete->getSaveFilePath());
@@ -71,7 +75,7 @@ QMenu* GridTabs::createContextMenu(int tabIndex) {
         toDelete->deleteLater();
 
         if (count() == 0)
-            addGrid("New tab");
+            addEmptyTab();
     });
 
     return menu;

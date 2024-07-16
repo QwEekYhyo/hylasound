@@ -10,11 +10,11 @@ TabNameDialog::TabNameDialog(QWidget* parent, bool rename) : QDialog(parent) {
     QLabel* label;
 
     if (rename) {
-        setWindowTitle("Rename Tab");
-        label = new QLabel("Enter a new name for the tab:");
+        setWindowTitle(tr("Rename Tab"));
+        label = new QLabel(tr("Enter a new name for the tab:"));
     } else {
-        setWindowTitle("Add New Tab");
-        label = new QLabel("Enter a name for the new tab:");
+        setWindowTitle(tr("Add New Tab"));
+        label = new QLabel(tr("Enter a name for the new tab:"));
     }
 
     mainLayout->addWidget(label);
@@ -25,8 +25,8 @@ TabNameDialog::TabNameDialog(QWidget* parent, bool rename) : QDialog(parent) {
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     mainLayout->addLayout(buttonLayout);
 
-    QPushButton* okButton = new QPushButton("OK");
-    QPushButton* cancelButton = new QPushButton("Cancel");
+    QPushButton* okButton = new QPushButton(tr("OK"));
+    QPushButton* cancelButton = new QPushButton(tr("Cancel"));
     buttonLayout->addWidget(okButton);
     buttonLayout->addWidget(cancelButton);
 

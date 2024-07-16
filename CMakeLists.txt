@@ -11,8 +11,9 @@ find_package(Qt6 REQUIRED COMPONENTS
     Gui
     Widgets
     Multimedia
+    LinguistTools
 )
-qt_standard_project_setup()
+qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES fr)
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE HEADERS include/*.hpp)
@@ -20,6 +21,9 @@ file(GLOB_RECURSE HEADERS include/*.hpp)
 include_directories(include)
 
 qt_add_executable(hylasound ${SOURCES} ${HEADERS} resources/soundboard.qrc)
+
+qt6_add_translations(hylasound QM_FILES_OUTPUT_VARIABLE qm_files)
+install(FILES ${qm_files} DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 target_link_libraries(hylasound PRIVATE
     Qt6::Core

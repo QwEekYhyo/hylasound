@@ -38,21 +38,21 @@ void MainWindow::openAddButtonDialog() {
 
         if (!name.isEmpty() && !filePath.isEmpty()) {
             if (m_mainWidget->currentGrid()->addButton(name, filePath))
-                QMessageBox::information(this, "Success", "Button added successfully!");
+                QMessageBox::information(this, tr("Success"), tr("Button added successfully!"));
             else
-                QMessageBox::critical(this, "Error", "Grid is full. Button not added.");
+                QMessageBox::critical(this, tr("Error"), tr("Grid is full. Button not added."));
         } else {
-            QMessageBox::warning(this, "Error", "Name or file path is empty. Button not added.");
+            QMessageBox::warning(this, tr("Error"), tr("Name or file path is empty. Button not added."));
         }
     }
 }
 
 void MainWindow::setupMenuBar() {
     // File
-    QMenu* fileMenu = menuBar()->addMenu("&File");
-    QAction* openAction = fileMenu->addAction("&Open");
+    QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
+    QAction* openAction = fileMenu->addAction(tr("&Open"));
     connect(openAction, &QAction::triggered, this, &MainWindow::openAddButtonDialog);
-    QAction* newTabAction = fileMenu->addAction("Add New &Tab");
+    QAction* newTabAction = fileMenu->addAction(tr("Add New &Tab"));
     connect(newTabAction, &QAction::triggered, this, [this](){
         QString tabName = openNewTabDialog();
         if (!tabName.isEmpty())
@@ -61,15 +61,15 @@ void MainWindow::setupMenuBar() {
 
     fileMenu->addSeparator();
 
-    QAction* clearAction = fileMenu->addAction("Delete All Buttons");
+    QAction* clearAction = fileMenu->addAction(tr("Delete All Buttons"));
     connect(clearAction, &QAction::triggered, m_mainWidget->currentGrid(), &ButtonGrid::clearAllButtons);
-    QAction* quitAction = fileMenu->addAction("&Quit");
+    QAction* quitAction = fileMenu->addAction(tr("&Quit"));
     quitAction->setShortcut(Qt::Key_Q | Qt::CTRL);
     connect(quitAction, &QAction::triggered, this, &QApplication::quit);
 
     // Settings
-    QMenu* settingsMenu = menuBar()->addMenu("&Settings");
-    QAction* styleAction = settingsMenu->addAction("Awesome Style");
+    QMenu* settingsMenu = menuBar()->addMenu(tr("&Settings"));
+    QAction* styleAction = settingsMenu->addAction(tr("Awesome Style"));
     styleAction->setCheckable(true);
     connect(styleAction, &QAction::triggered, this, [this](bool checked){
         if (checked) {
@@ -92,13 +92,13 @@ void MainWindow::setupMenuBar() {
         styleAction->trigger();
 
     // Help
-    QMenu* helpMenu = menuBar()->addMenu("&Help");
-    QAction* aboutAction = helpMenu->addAction("&About");
+    QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
+    QAction* aboutAction = helpMenu->addAction(tr("&About"));
     connect(aboutAction, &QAction::triggered, this, [this](){
         AboutDialog about(this);
         about.exec();
     });
-    QAction* aboutQtAction = helpMenu->addAction("About &Qt");
+    QAction* aboutQtAction = helpMenu->addAction(tr("About &Qt"));
     connect(aboutQtAction, &QAction::triggered, this, [this](){
         QMessageBox::aboutQt(this);
     });

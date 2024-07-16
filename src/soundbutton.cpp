@@ -55,7 +55,7 @@ SoundButton& SoundButton::operator=(const SoundButton& other) {
 
 void SoundButton::renameButton() {
     bool ok;
-    QString newName = QInputDialog::getText(this, "Rename Button", "Enter new name:", QLineEdit::Normal, text(), &ok);
+    QString newName = QInputDialog::getText(this, tr("Rename Button"), tr("Enter new name:"), QLineEdit::Normal, text(), &ok);
     if (ok && !newName.isEmpty()) {
         setDisplayName(newName);
     }
@@ -63,8 +63,8 @@ void SoundButton::renameButton() {
 
 void SoundButton::createContextMenu() {
     m_contextMenu = new QMenu(this);
-    QAction* renameAction = m_contextMenu->addAction("&Rename Button");
-    QAction* removeAction = m_contextMenu->addAction("&Remove Button");
+    QAction* renameAction = m_contextMenu->addAction(tr("Re&name Button"));
+    QAction* removeAction = m_contextMenu->addAction(tr("&Remove Button"));
 
     connect(renameAction, &QAction::triggered, this, &SoundButton::renameButton);
     connect(removeAction, &QAction::triggered, this, [this]() {

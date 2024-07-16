@@ -4,7 +4,7 @@
 #include <QPushButton>
 
 AboutDialog::AboutDialog(QWidget* parent) : QDialog(parent) {
-    setWindowTitle("About HylaSound");
+    setWindowTitle(tr("About HylaSound"));
     setFixedSize(320, 300);
 
     QVBoxLayout* layout = new QVBoxLayout(this);
@@ -19,12 +19,12 @@ AboutDialog::AboutDialog(QWidget* parent) : QDialog(parent) {
     nameLabel->setStyleSheet("font-size: 18px; font-weight: bold;");
     layout->addWidget(nameLabel);
 
-    QLabel* descLabel = new QLabel("A simple soundboard application");
+    QLabel* descLabel = new QLabel(tr("A simple soundboard application"));
     descLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(descLabel);
 
     QLabel* websiteLabel = new QLabel;
-    websiteLabel->setText("You can contribute to the source code <a href=\"https://github.com/QwEekYhyo/hylasound/\">here</a>");
+    websiteLabel->setText(tr("You can contribute to the source code <a href=\"https://github.com/QwEekYhyo/hylasound/\">here</a>"));
     websiteLabel->setTextFormat(Qt::RichText);
     websiteLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
     websiteLabel->setOpenExternalLinks(true);
@@ -35,13 +35,13 @@ AboutDialog::AboutDialog(QWidget* parent) : QDialog(parent) {
     copyrightLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(copyrightLabel);
 
-    m_createdByLabel = new QLabel("Created by:<br><span style='color: #FF0000;'>Logan</span>");
+    m_createdByLabel = new QLabel(tr("Created by:<br><span style='color: #FF0000;'>Logan</span>"));
     m_createdByLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(m_createdByLabel);
 
     layout->addSpacing(20);
 
-    QPushButton* okButton = new QPushButton("OK", this);
+    QPushButton* okButton = new QPushButton(tr("OK"), this);
     connect(okButton, &QPushButton::clicked, this, &QDialog::accept);
     layout->addWidget(okButton, 0, Qt::AlignCenter);
 
@@ -55,5 +55,5 @@ void AboutDialog::updateAnimation() {
     static int colorIndex = 0;
 
     colorIndex = (colorIndex + 1) % colors.size();
-    m_createdByLabel->setText(QString("Created by:<br><span style='color: %1;'>Logan</span>").arg(colors[colorIndex]));
+    m_createdByLabel->setText(QString(tr("Created by:<br><span style='color: %1;'>Logan</span>")).arg(colors[colorIndex]));
 }

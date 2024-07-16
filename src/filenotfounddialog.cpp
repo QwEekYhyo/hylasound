@@ -8,25 +8,25 @@
 FileNotFoundDialog::FileNotFoundDialog(const QString& filePath, QWidget* parent)
     : QDialog(parent, Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint), m_result(Result::Dismiss), m_faultyFilePath(filePath) {
 
-    setWindowTitle("File Not Found");
+    setWindowTitle(tr("File Not Found"));
     setModal(true);
     setFixedSize(minimumWidth(), 160);
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
-    QString text = QString("The file \"%1\" is missing.\r\n").arg(m_faultyFilePath)
-        .append("It may have been moved, deleted or renamed.\r\n")
-        .append("You can choose to delete the button or browse files to search the file's new location.\r\n")
-        .append("What would you like to do?");
+    QString text = QString(tr("The file \"%1\" is missing.<br>")).arg(m_faultyFilePath)
+        .append(tr("It may have been moved, deleted or renamed.<br>"))
+        .append(tr("You can choose to delete the button or browse files to search the file's new location.<br>"))
+        .append(tr("What would you like to do?"));
 
     QLabel* textLabel = new QLabel(text);
     mainLayout->addWidget(textLabel);
     mainLayout->addSpacing(20);
 
     QHBoxLayout* buttonLayout = new QHBoxLayout();
-    QPushButton* dismissButton = new QPushButton("Dismiss");
-    QPushButton* deleteButton = new QPushButton("Delete");
-    QPushButton* browseButton = new QPushButton("Browse");
+    QPushButton* dismissButton = new QPushButton(tr("Dismiss"));
+    QPushButton* deleteButton = new QPushButton(tr("Delete"));
+    QPushButton* browseButton = new QPushButton(tr("Browse"));
 
     buttonLayout->addWidget(dismissButton);
     buttonLayout->addWidget(deleteButton);
@@ -52,9 +52,9 @@ void FileNotFoundDialog::onDeleteClicked() {
 void FileNotFoundDialog::onBrowseClicked() {
     QString newFilePath = QFileDialog::getOpenFileName(
             this,
-            "Select New Sound File",
+            tr("Select New Sound File"),
             m_faultyFilePath,
-            "Audio Files (*.mp3 *.wav *.WAV *.avi *.bwf *.ogg *.aif *.aiff *.caf)"
+            tr("Audio Files (*.mp3 *.wav *.WAV *.avi *.bwf *.ogg *.aif *.aiff *.caf)")
     );
     if (!newFilePath.isEmpty()) {
         m_newFilePath = newFilePath;
