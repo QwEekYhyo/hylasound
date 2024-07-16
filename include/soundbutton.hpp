@@ -29,6 +29,7 @@ private slots:
     void renameButton();
 
 private:
+    bool m_isAwesomeStyled{false};
     QMediaPlayer* m_player = nullptr;
     QString m_path;
     QMenu* m_contextMenu;
@@ -38,6 +39,8 @@ private:
 
     void enterEvent(QEnterEvent* event) override;
     void leaveEvent(QEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
     void paintEvent(QPaintEvent* event) override;
 
 };

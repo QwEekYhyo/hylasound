@@ -5,7 +5,7 @@
 #include <QLineEdit>
 #include <QContextMenuEvent>
 #include <QFile>
-#include <QGraphicsOpacityEffect>
+#include <QGraphicsColorizeEffect>
 #include <QPainter>
 #include <QPainterPath>
 #include <QSettings>
@@ -77,9 +77,10 @@ void SoundButton::contextMenuEvent(QContextMenuEvent* event) {
 }
 
 void SoundButton::enterEvent(QEnterEvent* event) {
-    if (isEnabled()) {
-        QGraphicsOpacityEffect* effect = new QGraphicsOpacityEffect(this);
-        effect->setOpacity(0.7);
+    if (isEnabled() && m_isAwesomeStyled) {
+        QGraphicsColorizeEffect* effect = new QGraphicsColorizeEffect(this);
+        effect->setColor(Qt::white);
+        effect->setStrength(0.2);
         setGraphicsEffect(effect);
     }
     QPushButton::enterEvent(event);
@@ -90,14 +91,31 @@ void SoundButton::leaveEvent(QEvent* event) {
     QPushButton::leaveEvent(event);
 }
 
+void SoundButton::mousePressEvent(QMouseEvent* event) {
+    if (isEnabled() && m_isAwesomeStyled) {
+        QGraphicsColorizeEffect* effect = (QGraphicsColorizeEffect*) this->graphicsEffect();
+        effect->setStrength(0.4);
+    }
+    QPushButton::mousePressEvent(event);
+}
+
+void SoundButton::mouseReleaseEvent(QMouseEvent* event) {
+    if (isEnabled() && m_isAwesomeStyled) {
+        QGraphicsColorizeEffect* effect = (QGraphicsColorizeEffect*) this->graphicsEffect();
+        effect->setStrength(0.2);
+    }
+    QPushButton::mouseReleaseEvent(event);
+}
+
 // This method is called a hundred times per second I don't know if
 // all this logic being spammed is good practice but whatever
 void SoundButton::paintEvent(QPaintEvent* event) {
     QPushButton::paintEvent(event);
     QSettings settings;
     QString storedStyle = settings.value("globalstyle", "none").toString();
+    m_isAwesomeStyled = GlobalStyle::fromString(storedStyle) == GlobalStyle::AWESOME;
 
-    if (GlobalStyle::fromString(storedStyle) == GlobalStyle::AWESOME) {
+    if (m_isAwesomeStyled) {
         QPainter painter(this);
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setRenderHint(QPainter::TextAntialiasing);
