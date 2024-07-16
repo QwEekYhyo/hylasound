@@ -21,13 +21,34 @@ QMenu:selected {
     background-color: #bba2a3;
 }
 
-QTabBar {
-    background-color: #ff4374;
-    color: #f0f0f0;
+QTabBar::tab {
+    background-color: #ff7d9f;
+    color: #333333;
+    padding: 5px;
+    border: 1px solid #ff4374;
+    border-bottom: none;
 }
 
-QTabBar:selected {
+QTabBar::tab:selected {
+    background-color: #ff4374;
     color: #ffffff;
+    border-bottom: 1px solid #ff4374;
+}
+
+QTabBar::tab:!selected {
+    margin-top: 2px;
+}
+
+QTabBar::tab:hover {
+    background-color: #ffb3b5;
+}
+
+QTabWidget::tab-bar {
+    alignment: center;
+}
+
+QTabBar {
+    qproperty-drawBase: 0;
 }
 
 GridTabs {
@@ -36,6 +57,7 @@ GridTabs {
 
 ButtonGrid {
     background-image: url(:/images/awesome_background.png);
+    border: 1px solid #ff4374;
 }
 
 SoundButton {
