@@ -11,3 +11,12 @@ SoundButton {
 SoundButton[enabled="false"] {
     border-image: url(:/images/awesome_disabled_button.png) 0 0 0 0 stretch stretch;
 }
+
+QTabBar {
+    background-color: #ff4374;
+    color: #f0f0f0;
+}
+
+QTabBar:selected {
+    color: #ffffff;
+}
