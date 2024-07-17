@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
 
     QTranslator appTranslator;
     // Load translations
-    Q_UNUSED(appTranslator.load("hylasound_fr"));
+    Q_UNUSED(appTranslator.load("translations/hylasound_fr"));
 
     app.installTranslator(&appTranslator);
   

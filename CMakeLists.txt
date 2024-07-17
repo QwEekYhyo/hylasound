@@ -13,17 +13,33 @@ find_package(Qt6 REQUIRED COMPONENTS
     Multimedia
     LinguistTools
 )
-qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES fr)
+
+qt_standard_project_setup(
+    I18N_SOURCE_LANGUAGE en
+    I18N_TRANSLATED_LANGUAGES fr
+)
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE HEADERS include/*.hpp)
+file(GLOB_RECURSE TS_FILES translations/*.ts)
 
 include_directories(include)
 
 qt_add_executable(hylasound ${SOURCES} ${HEADERS} resources/soundboard.qrc)
 
-qt6_add_translations(hylasound QM_FILES_OUTPUT_VARIABLE qm_files)
-install(FILES ${qm_files} DESTINATION ${CMAKE_INSTALL_BINDIR})
+set(TRANSLATIONS_QM_DIR ${CMAKE_BINARY_DIR}/translations)
+set_source_files_properties(${TS_FILES}
+    PROPERTIES OUTPUT_LOCATION ${TRANSLATIONS_QM_DIR})
+
+qt_add_translations(
+    TARGETS hylasound
+    TS_FILES ${TS_FILES}
+    TS_FILE_DIR translations
+    INCLUDE_DIRECTORIES ${INCLUDE_DIRECTORIES}
+    SOURCES ${SOURCES}
+    QM_FILES_OUTPUT_VARIABLE qm_files
+)
+install(FILES ${qm_files} DESTINATION ${TRANSLATIONS_QM_DIR})
 
 target_link_libraries(hylasound PRIVATE
     Qt6::Core
