@@ -10,11 +10,20 @@ int main(int argc, char** argv) {
     QCoreApplication::setOrganizationName("LoganCorp");
     QCoreApplication::setOrganizationDomain("logancorp.com");
 
-    QTranslator appTranslator;
-    // Load translations
-    Q_UNUSED(appTranslator.load("translations/hylasound_fr"));
+    QString translationDir = QCoreApplication::applicationDirPath() + "/translations";
 
-    app.installTranslator(&appTranslator);
+    QTranslator translator;
+    QString locale = QLocale::system().name(); // for example "en_US"
+    locale.truncate(locale.lastIndexOf('_'));  // for example "en"
+
+    QString translationFile = QString("hylasound_%1.qm").arg(locale);
+
+    if (translator.load(translationFile, translationDir)) {
+        app.installTranslator(&translator);
+        qDebug() << "Loaded translation:" << translationFile;
+    } else {
+        qDebug() << "Failed to load translation:" << translationFile;
+    }
   
     MainWindow mainWindow;
     mainWindow.show();
