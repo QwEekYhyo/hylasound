@@ -13,7 +13,8 @@ AddButtonDialog::AddButtonDialog(QWidget* parent) : QDialog(parent) {
     // Name input
     QHBoxLayout* nameLayout = new QHBoxLayout();
     QLabel* nameLabel = new QLabel(tr("Button Name:"));
-    m_nameEdit = new QLineEdit();
+    m_nameEdit = new QLineEdit(this);
+    m_nameEdit->setPlaceholderText(tr("Button name"));
     nameLayout->addWidget(nameLabel);
     nameLayout->addWidget(m_nameEdit);
     mainLayout->addLayout(nameLayout);
@@ -21,7 +22,8 @@ AddButtonDialog::AddButtonDialog(QWidget* parent) : QDialog(parent) {
     // File input
     QHBoxLayout* fileLayout = new QHBoxLayout();
     QLabel* fileLabel = new QLabel(tr("Sound File:"));
-    m_filePathEdit = new QLineEdit();
+    m_filePathEdit = new QLineEdit(this);
+    m_filePathEdit->setPlaceholderText(tr("C:\\path\\to\\sound.mp3"));
     m_browseButton = new QPushButton(tr("Browse"));
     fileLayout->addWidget(fileLabel);
     fileLayout->addWidget(m_filePathEdit);

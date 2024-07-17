@@ -50,32 +50,42 @@
         <translation>Nom du Bouton :</translation>
     </message>
     <message>
-        <location filename="../src/addbuttondialog.cpp" line="23"/>
+        <location filename="../src/addbuttondialog.cpp" line="17"/>
+        <source>Button name</source>
+        <translation>Nom de bouton</translation>
+    </message>
+    <message>
+        <location filename="../src/addbuttondialog.cpp" line="24"/>
         <source>Sound File:</source>
         <translation>Fichier Son :</translation>
     </message>
     <message>
-        <location filename="../src/addbuttondialog.cpp" line="25"/>
+        <location filename="../src/addbuttondialog.cpp" line="26"/>
+        <source>C:\path\to\sound.mp3</source>
+        <translation>C:\chemin\vers\son.mp3</translation>
+    </message>
+    <message>
+        <location filename="../src/addbuttondialog.cpp" line="27"/>
         <source>Browse</source>
         <translation>Parcourir</translation>
     </message>
     <message>
-        <location filename="../src/addbuttondialog.cpp" line="33"/>
+        <location filename="../src/addbuttondialog.cpp" line="35"/>
         <source>OK</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../src/addbuttondialog.cpp" line="34"/>
+        <location filename="../src/addbuttondialog.cpp" line="36"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../src/addbuttondialog.cpp" line="47"/>
+        <location filename="../src/addbuttondialog.cpp" line="49"/>
         <source>Select Sound File</source>
         <translation>Sélectionnez le fichier son</translation>
     </message>
     <message>
-        <location filename="../src/addbuttondialog.cpp" line="49"/>
+        <location filename="../src/addbuttondialog.cpp" line="51"/>
         <source>Audio Files (*.mp3 *.wav *.WAV *.avi *.bwf *.ogg *.aif *.aiff *.caf)</source>
         <translation>Fichiers Audio (*.mp3 *.wav *.WAV *.avi *.bwf *.ogg *.aif *.aiff *.caf)</translation>
     </message>
@@ -282,12 +292,17 @@
         <translation>Entrez un nom pour le nouvel onglet :</translation>
     </message>
     <message>
-        <location filename="../src/tabnamedialog.cpp" line="28"/>
+        <location filename="../src/tabnamedialog.cpp" line="23"/>
+        <source>Tab name</source>
+        <translation>Nom d&apos;onglet</translation>
+    </message>
+    <message>
+        <location filename="../src/tabnamedialog.cpp" line="29"/>
         <source>OK</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../src/tabnamedialog.cpp" line="29"/>
+        <location filename="../src/tabnamedialog.cpp" line="30"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
