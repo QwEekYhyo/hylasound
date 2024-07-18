@@ -24,6 +24,7 @@ public:
 signals:
     void removeRequested(SoundButton* button, bool doSave);
     void fileNotFound(SoundButton* button);
+    void changedButtonName();
 
 private slots:
     void renameButton();

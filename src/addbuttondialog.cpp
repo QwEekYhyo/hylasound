@@ -15,6 +15,7 @@ AddButtonDialog::AddButtonDialog(QWidget* parent) : QDialog(parent) {
     QLabel* nameLabel = new QLabel(tr("Button Name:"));
     m_nameEdit = new QLineEdit(this);
     m_nameEdit->setPlaceholderText(tr("Button name"));
+    m_nameEdit->setMaxLength(25);
     nameLayout->addWidget(nameLabel);
     nameLayout->addWidget(m_nameEdit);
     mainLayout->addLayout(nameLayout);

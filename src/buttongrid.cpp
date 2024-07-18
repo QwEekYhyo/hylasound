@@ -41,6 +41,7 @@ bool ButtonGrid::addButton(const QString& name, const QString& filepath, bool do
 
         connect(button, &SoundButton::removeRequested, this, &ButtonGrid::removeButton);
         connect(button, &SoundButton::fileNotFound, this, &ButtonGrid::onFileNotFound);
+        connect(button, &SoundButton::changedButtonName, this, &ButtonGrid::saveButtonsToJson);
 
         m_cursor++;
         if (doSave)
@@ -55,6 +56,7 @@ void ButtonGrid::removeButton(SoundButton* button, bool doSave) {
     if (index != -1) {
         button->setDisplayName("");
         button->setDisabled(true);
+        button->disconnect(nullptr, this); // only disconnect signals received by the ButtonGrid
         button->style()->polish(button); // update style of "removed" button
         // Rearrange item in the list
         for (size_t i = index; i < m_cursor && i < m_buttons.size() - 1; i++) {

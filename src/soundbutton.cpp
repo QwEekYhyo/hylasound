@@ -54,10 +54,23 @@ SoundButton& SoundButton::operator=(const SoundButton& other) {
 }
 
 void SoundButton::renameButton() {
-    bool ok;
-    QString newName = QInputDialog::getText(this, tr("Rename Button"), tr("Enter new name:"), QLineEdit::Normal, text(), &ok);
-    if (ok && !newName.isEmpty()) {
-        setDisplayName(newName);
+    QInputDialog dialog(this);
+    dialog.setWindowTitle(tr("Rename Button"));
+    dialog.setLabelText(tr("Enter new name:"));
+    dialog.setTextValue(text());
+    dialog.setTextEchoMode(QLineEdit::Normal);
+
+    QLineEdit *lineEdit = dialog.findChild<QLineEdit*>();
+    if (lineEdit) {
+        lineEdit->setMaxLength(25);
+    }
+
+    if (dialog.exec() == QDialog::Accepted) {
+        QString newName = dialog.textValue();
+        if (!newName.isEmpty()) {
+            setDisplayName(newName);
+            emit changedButtonName();
+        }
     }
 }
 

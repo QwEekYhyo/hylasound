@@ -21,6 +21,7 @@ TabNameDialog::TabNameDialog(QWidget* parent, bool rename) : QDialog(parent) {
 
     m_nameEdit = new QLineEdit(this);
     m_nameEdit->setPlaceholderText(tr("Tab name"));
+    m_nameEdit->setMaxLength(50);
     mainLayout->addWidget(m_nameEdit);
 
     QHBoxLayout* buttonLayout = new QHBoxLayout();
