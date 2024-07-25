@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QFile>
+#include <QFileInfo>
 
 MainWindow::MainWindow() {
     setWindowTitle("HylaSound");
@@ -36,7 +37,8 @@ void MainWindow::openAddButtonDialog() {
         QString name = dialog.getName().trimmed();
         QString filePath = dialog.getFilePath();
 
-        if (!name.isEmpty() && !filePath.isEmpty()) {
+        if (!filePath.isEmpty()) {
+            if (name.isEmpty()) name = QFileInfo(filePath).baseName();
             if (m_mainWidget->currentGrid()->addButton(name, filePath))
                 QMessageBox::information(this, tr("Success"), tr("Button added successfully!"));
             else
