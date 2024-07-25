@@ -53,6 +53,7 @@ void MainWindow::setupMenuBar() {
     // File
     QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
     QAction* openAction = fileMenu->addAction(tr("&Open"));
+    openAction->setShortcut(Qt::Key_O | Qt::CTRL);
     connect(openAction, &QAction::triggered, this, &MainWindow::openAddButtonDialog);
     QAction* newTabAction = fileMenu->addAction(tr("Add New &Tab"));
     connect(newTabAction, &QAction::triggered, this, [this](){
