@@ -25,7 +25,12 @@ file(GLOB_RECURSE TS_FILES translations/*.ts)
 
 include_directories(include)
 
-qt_add_executable(hylasound ${SOURCES} ${HEADERS} resources/soundboard.qrc)
+if (WIN32)
+    set(app_icon_resource_win32 resources/icon.rc)
+    qt_add_executable(hylasound ${SOURCES} ${HEADERS} resources/soundboard.qrc ${app_icon_resource_win32})
+else()
+    qt_add_executable(hylasound ${SOURCES} ${HEADERS} resources/soundboard.qrc)
+endif()
 
 set(TRANSLATIONS_QM_DIR ${CMAKE_BINARY_DIR}/translations)
 set_source_files_properties(${TS_FILES}
@@ -64,6 +69,7 @@ if (WIN32 OR APPLE)
         TARGET hylasound
         OUTPUT_SCRIPT deploy_script
         NO_UNSUPPORTED_PLATFORM_ERROR
+        NO_TRANSLATIONS
     )
     install(SCRIPT ${deploy_script})
 endif()

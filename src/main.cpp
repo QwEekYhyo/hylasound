@@ -10,7 +10,11 @@ int main(int argc, char** argv) {
     QCoreApplication::setOrganizationName("LoganCorp");
     QCoreApplication::setOrganizationDomain("logancorp.com");
 
+#ifdef Q_OS_WIN
+    QString translationDir = QCoreApplication::applicationDirPath() + "/../translations";
+#else
     QString translationDir = QCoreApplication::applicationDirPath() + "/translations";
+#endif
 
     QTranslator translator;
     QString locale = QLocale::system().name(); // for example "en_US"
